@@ -18,7 +18,7 @@ casper.then(function(){
 casper.then(function(){
   this.evaluate(function(){
     $('form#frmLogin').submit()
-  }
+  })
 })
 
 casper.then(function(){
