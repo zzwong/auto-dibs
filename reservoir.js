@@ -5,10 +5,8 @@ var casper = require('casper').create({
   }
 });
 
-// Usage: casperjs blah.js 722 Geisel 9/19/2016 10:00:00
-// Book room#722 in Geisel on 9/19/2016 at 12:30pm
 
-// Geisel
+// Geisel & BLB
 var roomNum_DibsRoomID = {
   '1': 1,'1040': 2,'1041': 3,'1042': 4,'1045': 5,'2': 51,'2070': 22,'2071':23,'2072':24,
   '518':35, '519': 36, '521':37,'522':38,'618':39,'619':40, '620':41, '622':42,'623':43,'624':44,'625':45,'626':46,
@@ -23,21 +21,18 @@ var argRmNum = casper.cli.get(1);
 var argDate = casper.cli.get(2).toLowerCase();
 var argTime = casper.cli.get(3);
 var argEmail = casper.cli.get(4);
-//
+
+// Check command line args?
 // casper.echo(casper.cli.has(0));
 // if (casper.cli.args.length < 5){
 //   casper.echo('not enough args').exit();
 // }
 
 
-function getRoomID(room_number, library){
-  //if (library === "geisel")
-  return roomNum_DibsRoomID_G[wantedRoomNum];
-}
-
-
-var times;
-
+/**
+ * Currently parses the keywords: 'tomorrow', 'tmr', 'today'
+ * and returns DIBS formatted date as YYYY/MM/DD
+ */
 function parseDate(wantedDate){
   // Parse date and return formatted date
   var year, month, day;
@@ -61,8 +56,6 @@ function parseDate(wantedDate){
   var dibsFormattedDate = year+'/'+month+'/'+day;
   return dibsFormattedDate;
 }
-
-
 
 /**
  * Takes in user input for time and returns military time
@@ -114,10 +107,6 @@ casper.then(function(){
 });
 
 casper.then(function(){
-  // this.evaluate(function(){
-  //   var libraries = document.querySelectorAll('div.item-link');
-  //   libraries[1].click();
-  // });
   // Doesn't matter which LIbrary is clicked because all it does is hide the rooms
   // that belong to the other library
   this.click('div.item-link');
@@ -126,10 +115,6 @@ casper.then(function(){
 });
 
 casper.then(function(){
-  // this.fill('form#frmTimes',{
-  //   'SelectedStartTime' : '2016/10/01 17:00:00'
-  // }, true);
-
   var formattedDate = parseDate(argDate);
   var formattedTime = parseTime(argTime);
   var startTime = formattedDate + ' ' + formattedTime;
@@ -142,6 +127,7 @@ casper.then(function(){
 });
 
 casper.then(function(){
+  // select room 
   var roomNum = roomNum_DibsRoomID[argRmNum].toString();
   this.echo(roomNum)
   this.fill('form#frmRooms',{
@@ -161,7 +147,6 @@ casper.then(function(){
     this.echo(this.getCurrentUrl());
   }, 5000);
 });
-
 
 casper.run(function(){
   this.captureSelector('dibs.jpg', 'html');
