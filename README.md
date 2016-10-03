@@ -1,6 +1,6 @@
 # Auto DiBS
 
-A script for automatically making study room reservations at Geisel or Biomed Library. Built using CasperJS / PhantomJS.
+A script for automatically making study room reservations at Geisel or Biomedical Library. Built using CasperJS / PhantomJS.
 
 Caveats: must know the room # you want to reserve in advance
 
@@ -18,7 +18,7 @@ $ casperjs reservoir.js [lib card number] [room_number] [date] [time] [ucsd.edu 
 ```
 
 ## Further Explorations:
-- Wrap the script around a Messenger / [other chat] Bot to easily book rooms
+- Wrap the script around a Messenger / [other chat] Bot to chatify room reservations
 - Book any room available at the specified time
 
 
